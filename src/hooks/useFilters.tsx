@@ -9,7 +9,7 @@ import GenericFilterBadge from "@/CAREUI/display/FilterBadge";
 import PaginationComponent from "@/components/common/Pagination";
 
 import FiltersCache from "@/Utils/FiltersCache";
-import { QueryParams } from "@/Utils/request/types";
+import { QueryParams } from "@/lib/requests";
 import { humanizeStrings } from "@/Utils/utils";
 
 export type FilterState = Record<string, unknown>;

@@ -1,5 +1,5 @@
 import routes from "./routes";
-import AnalyticsIcon from "./components/icon";
+import AnalyticsIcon from "./CAREUI/icons/AnalyticsIcon";
 
 const manifest = {
   plugin: "care_analytics_fe",

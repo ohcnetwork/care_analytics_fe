@@ -8,7 +8,7 @@ type QueryParamValue =
   | undefined
   | Array<string | number | boolean | null | undefined>;
 
-type QueryParams = Record<string, QueryParamValue>;
+export type QueryParams = Record<string, QueryParamValue>;
 
 export enum HttpMethod {
   GET = "GET",
