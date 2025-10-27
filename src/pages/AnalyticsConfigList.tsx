@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Pencil, PlusIcon, Search } from "lucide-react";
 import { useNavigate } from "raviger";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/hooks/useTranslation";
 
 import CareIcon from "@/CAREUI/icons/CareIcon";
 
