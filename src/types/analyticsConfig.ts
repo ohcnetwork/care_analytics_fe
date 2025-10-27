@@ -4,7 +4,6 @@ export enum AnalyticsHandler {
 
 export enum AnalyticsContextType {
   facility = "facility",
-  organization = "organization",
 }
 
 export interface AnalyticsConfigBase {
