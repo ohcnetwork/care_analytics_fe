@@ -42,7 +42,6 @@ export default function AnalyticsViewer({
       pathParams: { analyticsConfigId },
     }),
     onSuccess: (data: AnalyticsUrlResponse) => {
-      console.log(data);
       setAnalyticsUrl(data.redirect_url);
     },
     onError: () => {
@@ -66,9 +65,7 @@ export default function AnalyticsViewer({
   const handleRefresh = () => {
     setAnalyticsUrl(null);
     generateUrlMutation.mutate({
-      context: {
-        facility_id: facilityId,
-      },
+      context_id: facilityId,
     });
   };
 
