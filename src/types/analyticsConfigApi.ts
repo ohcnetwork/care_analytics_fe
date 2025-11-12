@@ -34,4 +34,9 @@ export default {
     method: HttpMethod.POST,
     TRes: Type<AnalyticsUrlResponse>(),
   },
+  archiveAnalyticsConfig: {
+    path: "/api/analytics/config/{analyticsConfigId}/",
+    method: HttpMethod.DELETE,
+    TRes: Type<void>(),
+  },
 } as const;

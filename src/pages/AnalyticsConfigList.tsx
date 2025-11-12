@@ -1,12 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import { Pencil, PlusIcon, Search } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Archive, Pencil, PlusIcon, Search } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "raviger";
 import { useTranslation } from "@/hooks/useTranslation";
 
 import CareIcon from "@/CAREUI/icons/CareIcon";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,9 +37,10 @@ import {
 
 import useFilters from "@/hooks/useFilters";
 
-import { query } from "@/lib/requests";
+import { query, request } from "@/lib/requests";
 import { AnalyticsConfigRead } from "@/types/analyticsConfig";
 import analyticsConfigApi from "@/types/analyticsConfigApi";
+import { cn } from "@/lib/utils";
 
 function EmptyState() {
   const { t } = useTranslation();
@@ -51,10 +63,12 @@ const RenderCard = ({
   configs,
   isLoading,
   onEdit,
+  onArchive,
 }: {
   configs: AnalyticsConfigRead[];
   isLoading: boolean;
   onEdit: (id: string) => void;
+  onArchive: (id: string) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -111,15 +125,22 @@ const RenderCard = ({
                   </div>
                 )}
 
-                <div className="mt-4 flex justify-end">
+                <div className="mt-4 flex justify-end gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => onEdit(config.id)}
-                    className="hover:bg-primary/5"
                   >
                     <Pencil className="size-4 mr-2" />
                     {t("edit")}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onArchive(config.id)}
+                  >
+                    <Archive className="size-4 mr-2" />
+                    {t("archive")}
                   </Button>
                 </div>
               </CardContent>
@@ -135,10 +156,12 @@ const RenderTable = ({
   configs,
   isLoading,
   onEdit,
+  onArchive,
 }: {
   configs: AnalyticsConfigRead[];
   isLoading: boolean;
   onEdit: (id: string) => void;
+  onArchive: (id: string) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -189,14 +212,24 @@ const RenderTable = ({
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap px-6 py-4 text-sm">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onEdit(config.id)}
-                  >
-                    <Pencil className="size-4 mr-2" />
-                    {t("edit")}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onEdit(config.id)}
+                    >
+                      <Pencil className="size-4 mr-2" />
+                      {t("edit")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onArchive(config.id)}
+                    >
+                      <Archive className="size-4 mr-2" />
+                      {t("archive")}
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -210,6 +243,12 @@ const RenderTable = ({
 export default function AnalyticsConfigList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [configToArchive, setConfigToArchive] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+
   const { qParams, updateQuery, Pagination, resultsPerPage } = useFilters({
     limit: 15,
     disableCache: true,
@@ -226,10 +265,34 @@ export default function AnalyticsConfigList() {
     }),
   });
 
+  const archiveMutation = useMutation({
+    mutationFn: (analyticsConfigId: string) =>
+      request(analyticsConfigApi.archiveAnalyticsConfig, {
+        pathParams: { analyticsConfigId },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["analyticsConfig"] });
+      setConfigToArchive(null);
+    },
+  });
+
   const configs = response?.results || [];
 
   const handleEdit = (id: string) => {
     navigate(`/admin/analytics_config/${id}/edit`);
+  };
+
+  const handleArchive = (id: string) => {
+    const config = configs.find((c) => c.id === id);
+    if (config) {
+      setConfigToArchive({ id: config.id, name: config.name });
+    }
+  };
+
+  const confirmArchive = () => {
+    if (configToArchive) {
+      archiveMutation.mutate(configToArchive.id);
+    }
   };
 
   const handleCreate = () => {
@@ -269,11 +332,13 @@ export default function AnalyticsConfigList() {
           configs={configs}
           isLoading={isLoading}
           onEdit={handleEdit}
+          onArchive={handleArchive}
         />
         <RenderCard
           configs={configs}
           isLoading={isLoading}
           onEdit={handleEdit}
+          onArchive={handleArchive}
         />
 
         {response && response.count > resultsPerPage && (
@@ -282,6 +347,31 @@ export default function AnalyticsConfigList() {
           </div>
         )}
       </div>
+
+      <AlertDialog
+        open={!!configToArchive}
+        onOpenChange={(open) => !open && setConfigToArchive(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("archive_analytics_config")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("archive_analytics_config_confirmation", {
+                name: configToArchive?.name,
+              })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmArchive}
+              className={cn(buttonVariants({ variant: "destructive" }))}
+            >
+              {t("archive")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Page>
   );
 }
