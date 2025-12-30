@@ -13,12 +13,15 @@ import { CardGridSkeleton } from "@/components/common/SkeletonLoading";
 
 import useFilters from "@/hooks/useFilters";
 
-import { query } from "@/lib/requests";
-import { AnalyticsConfigRead } from "@/types/analyticsConfig";
-import analyticsConfigApi from "@/types/analyticsConfigApi";
+import {
+  AnalyticsConfigRead,
+  AnalyticsContextType,
+} from "@/types/analyticsConfig";
+import { useAnalyticsConfigList } from "@/lib/utils";
 
 interface AnalyticsListProps {
-  facilityId: string;
+  contextId: string;
+  contextType: AnalyticsContextType;
 }
 
 function EmptyState() {
@@ -87,7 +90,10 @@ function AnalyticsCards({
   );
 }
 
-export default function AnalyticsList({ facilityId }: AnalyticsListProps) {
+export default function AnalyticsList({
+  contextId,
+  contextType,
+}: AnalyticsListProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { qParams, updateQuery, Pagination, resultsPerPage } = useFilters({
@@ -95,22 +101,17 @@ export default function AnalyticsList({ facilityId }: AnalyticsListProps) {
     disableCache: true,
   });
 
-  const { data: response, isLoading } = useQuery({
-    queryKey: ["analyticsConfig", "facility", facilityId, qParams],
-    queryFn: query.debounced(analyticsConfigApi.listAnalytics, {
-      queryParams: {
-        limit: resultsPerPage,
-        offset: ((qParams.page ?? 1) - 1) * resultsPerPage,
-        name: qParams.name,
-        context_type: "facility",
-      },
-    }),
+  const { data: response, isLoading } = useAnalyticsConfigList({
+    contextType,
+    contextId,
+    qParams,
+    resultsPerPage,
   });
 
   const configs = response?.results || [];
 
   const handleView = (id: string) => {
-    navigate(`/facility/${facilityId}/analytics/${id}`);
+    navigate(`/${contextType}/${contextId}/analytics/${id}`);
   };
 
   return (

@@ -13,17 +13,19 @@ import Page from "@/components/common/Page";
 import { FormSkeleton } from "@/components/common/SkeletonLoading";
 
 import { mutate, query } from "@/lib/requests";
-import { AnalyticsUrlResponse } from "@/types/analyticsConfig";
+import { AnalyticsContextType, AnalyticsUrlResponse } from "@/types/analyticsConfig";
 import analyticsConfigApi from "@/types/analyticsConfigApi";
 
 interface AnalyticsViewerProps {
-  facilityId: string;
+  contextId: string;
   analyticsConfigId: string;
+  contextType: AnalyticsContextType;
 }
 
 export default function AnalyticsViewer({
-  facilityId,
+  contextId,
   analyticsConfigId,
+  contextType,
 }: AnalyticsViewerProps) {
   const { t } = useTranslation();
   const [analyticsUrl, setAnalyticsUrl] = useState<string | null>(null);
@@ -53,19 +55,19 @@ export default function AnalyticsViewer({
     if (config) {
       // Generate URL when config is loaded
       generateUrlMutation.mutate({
-        context_id: facilityId,
+        context_id: contextId,
       });
     }
-  }, [config, facilityId]);
+  }, [config, contextId]);
 
   const handleBack = () => {
-    navigate(`/facility/${facilityId}/analytics`);
+    navigate(`/${contextType}/${contextId}/analytics`);
   };
 
   const handleRefresh = () => {
     setAnalyticsUrl(null);
     generateUrlMutation.mutate({
-      context_id: facilityId,
+      context_id: contextId,
     });
   };
 
