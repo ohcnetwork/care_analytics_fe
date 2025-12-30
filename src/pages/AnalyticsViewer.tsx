@@ -61,7 +61,7 @@ export default function AnalyticsViewer({
   }, [config, contextId]);
 
   const handleBack = () => {
-    navigate(`/${contextType}/${contextId}/analytics`);
+    navigate("../analytics");
   };
 
   const handleRefresh = () => {

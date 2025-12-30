@@ -18,6 +18,20 @@ const routes = {
       analyticsConfigId={analyticsConfigId as string}
     />
   ),
+  "/organization/:organizationId/children/:contextId/analytics/:analyticsConfigId":
+    ({
+      organizationId,
+      analyticsConfigId,
+    }: {
+      organizationId: string;
+      analyticsConfigId: string;
+    }) => (
+      <AnalyticsViewer
+        contextId={organizationId}
+        contextType={AnalyticsContextType.organization}
+        analyticsConfigId={analyticsConfigId}
+      />
+    ),
   "/organization/:organizationId/analytics/:analyticsConfigId": ({
     organizationId,
     analyticsConfigId,
@@ -26,9 +40,9 @@ const routes = {
     analyticsConfigId: string;
   }) => (
     <AnalyticsViewer
-      contextId={organizationId as string}
+      contextId={organizationId}
       contextType={AnalyticsContextType.organization}
-      analyticsConfigId={analyticsConfigId as string}
+      analyticsConfigId={analyticsConfigId}
     />
   ),
   "/facility/:facilityId/analytics": ({
