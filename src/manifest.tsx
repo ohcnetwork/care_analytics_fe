@@ -1,5 +1,6 @@
 import routes from "./routes";
 import AnalyticsIcon from "./CAREUI/icons/AnalyticsIcon";
+import { OrganizationAnalytics } from "@/pages/OrganizationAnalytics";
 
 const manifest = {
   plugin: "care_analytics_fe",
@@ -18,6 +19,14 @@ const manifest = {
       name: "Analytics Config",
       url: "/admin/analytics_config",
       icon: <AnalyticsIcon />,
+    },
+  ],
+  organizationTabs: [
+    {
+      name: "Analytics",
+      slug: "analytics",
+      icon: <AnalyticsIcon />,
+      component: OrganizationAnalytics,
     },
   ],
 };
