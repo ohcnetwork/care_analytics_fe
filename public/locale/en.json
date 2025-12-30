@@ -48,6 +48,11 @@
   "failed_to_load_analytics_description": "There was an error loading the analytics dashboard. Please try again.",
   "try_again": "Try Again",
   "archive": "Archive",
+  "analytics_count": "{{count}} Analytic",
+  "analytics_count_other": "{{count}} Analytics",
   "archive_analytics_config": "Archive Analytics Config",
-  "archive_analytics_config_confirmation": "Are you sure you want to archive \"{{name}}\"? This action cannot be undone."
+  "archive_analytics_config_confirmation": "Are you sure you want to archive \"{{name}}\"? This action cannot be undone.",
+  "loading": "Loading",
+  "search_analytics": "Search Analytics",
+  "no_analytics_found": "No analytics found"
 }

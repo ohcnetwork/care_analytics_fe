@@ -1,28 +1,6 @@
 import routes from "./routes";
 import AnalyticsIcon from "./CAREUI/icons/AnalyticsIcon";
-import {
-  AnalyticsContextType,
-  AnalyticsConfigRead,
-} from "@/types/analyticsConfig";
-import { useAnalyticsConfigList } from "@/lib/utils";
-import { QueryParam } from "raviger";
-
-export const useOrganizationNavItems = (
-  contextId: string,
-  qParams: QueryParam,
-  resultsPerPage: number
-) => {
-  const { data: response } = useAnalyticsConfigList({
-    contextType: AnalyticsContextType.organization,
-    contextId,
-    qParams,
-    resultsPerPage,
-  });
-
-  const configs: AnalyticsConfigRead[] = response?.results || [];
-
-  return configs;
-};
+import { OrganizationAnalytics } from "@/pages/OrganizationAnalytics";
 
 const manifest = {
   plugin: "care_analytics_fe",
@@ -43,7 +21,14 @@ const manifest = {
       icon: <AnalyticsIcon />,
     },
   ],
-  organizationNavItems: useOrganizationNavItems,
+  organizationTabs: [
+    {
+      name: "Analytics",
+      slug: "analytics",
+      icon: <AnalyticsIcon />,
+      component: OrganizationAnalytics,
+    },
+  ],
 };
 
 export default manifest;
