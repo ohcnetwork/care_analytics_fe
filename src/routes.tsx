@@ -14,21 +14,19 @@ const routes = {
   }) => (
     <AnalyticsViewer
       contextId={facilityId as string}
-      contextType={AnalyticsContextType.facility}
       analyticsConfigId={analyticsConfigId as string}
     />
   ),
   "/organization/:organizationId/children/:contextId/analytics/:analyticsConfigId":
     ({
-      organizationId,
+      contextId,
       analyticsConfigId,
     }: {
-      organizationId: string;
+      contextId: string;
       analyticsConfigId: string;
     }) => (
       <AnalyticsViewer
-        contextId={organizationId}
-        contextType={AnalyticsContextType.organization}
+        contextId={contextId}
         analyticsConfigId={analyticsConfigId}
       />
     ),
@@ -41,7 +39,6 @@ const routes = {
   }) => (
     <AnalyticsViewer
       contextId={organizationId}
-      contextType={AnalyticsContextType.organization}
       analyticsConfigId={analyticsConfigId}
     />
   ),

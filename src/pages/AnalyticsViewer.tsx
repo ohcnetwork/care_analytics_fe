@@ -19,13 +19,11 @@ import analyticsConfigApi from "@/types/analyticsConfigApi";
 interface AnalyticsViewerProps {
   contextId: string;
   analyticsConfigId: string;
-  contextType: AnalyticsContextType;
 }
 
 export default function AnalyticsViewer({
   contextId,
   analyticsConfigId,
-  contextType,
 }: AnalyticsViewerProps) {
   const { t } = useTranslation();
   const [analyticsUrl, setAnalyticsUrl] = useState<string | null>(null);
