@@ -13,7 +13,7 @@ import Page from "@/components/common/Page";
 import { FormSkeleton } from "@/components/common/SkeletonLoading";
 
 import { mutate, query } from "@/lib/requests";
-import { AnalyticsContextType, AnalyticsUrlResponse } from "@/types/analyticsConfig";
+import { AnalyticsUrlResponse } from "@/types/analyticsConfig";
 import analyticsConfigApi from "@/types/analyticsConfigApi";
 
 interface AnalyticsViewerProps {
