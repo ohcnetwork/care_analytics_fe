@@ -1,6 +1,6 @@
 import routes from "./routes";
-import AnalyticsIcon from "./CAREUI/icons/AnalyticsIcon";
 import { OrganizationAnalytics } from "@/pages/OrganizationAnalytics";
+import { ChartLine } from "lucide-react";
 
 const manifest = {
   plugin: "care_analytics_fe",
@@ -11,21 +11,21 @@ const manifest = {
     {
       name: "Analytics",
       url: "analytics",
-      icon: <AnalyticsIcon />,
+      icon: <ChartLine />,
     },
   ],
   adminNavItems: [
     {
       name: "Analytics Config",
       url: "/admin/analytics_config",
-      icon: <AnalyticsIcon />,
+      icon: <ChartLine />,
     },
   ],
   organizationTabs: [
     {
       name: "Analytics",
       slug: "analytics",
-      icon: <AnalyticsIcon />,
+      icon: <ChartLine size={14} />,
       component: OrganizationAnalytics,
     },
   ],
