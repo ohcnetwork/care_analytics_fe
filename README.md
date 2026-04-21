@@ -16,7 +16,7 @@ CARE Analytics FE is a frontend plugin for CARE based on micro frontend architec
 
 ### Setup Instructions
 
-1. First you will need to setup both Care backend and frontend first before starting the analytics_fe development server
+1. First you will need to setup both Care backend and frontend first before starting the `care_analytics_fe` development server
 
 2. Clone the CARE Analytics FE repository:
   
@@ -101,4 +101,4 @@ After saving an active config:
    `/api/analytics/config/{analyticsConfigId}/generate_analytics_url/`
 4. CARE renders the returned `redirect_url` in an embedded viewer.
 
-The deployed plugin is available at `care-analytics-fe.pages.dev/`.
+The deployed plugin is available at [https://care-analytics-fe.pages.dev/](https://care-analytics-fe.pages.dev/)
