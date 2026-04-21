@@ -21,7 +21,7 @@ CARE Analytics FE is a frontend plugin for CARE based on micro frontend architec
 2. Clone the CARE Analytics FE repository:
   
 ```bash
-git clone https://github.com/ohcnetwork/care_analytics_fe.git
+git clone git@github.com:ohcnetwork/care_analytics_fe.git
 ```
 
 3. Install dependencies for CARE Analytics FE:
