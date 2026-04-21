@@ -12,27 +12,26 @@ CARE Analytics FE is a frontend plugin for CARE based on micro frontend architec
 ### Prerequisites
 
 - Node.js and npm (refer `care_fe` repository for the exact version requirements)
+- Metabase is required for dashboards to be displayed in CARE
 
 ### Setup Instructions
 
-1. Clone frontend,backend and analytics_fe repositories:
+1. First you will need to setup both Care backend and frontend first before starting the analytics_fe development server
 
+2. Clone the CARE Analytics FE repository:
+  
 ```bash
-git clone git@github.com:ohcnetwork/care_fe.git
-git clone git@github.com:ohcnetwork/care.git
-git clone git@github.com:ohcnetwork/care_analytics_fe.git
+git clone https://github.com/ohcnetwork/care_analytics_fe.git
 ```
 
-You will need to spin up both Care backend and frontend first before starting the analytics_fe development server.
-
-1. Install dependencies for CARE Analytics FE:
+3. Install dependencies for CARE Analytics FE:
 
 ```bash
 cd care_analytics_fe
 npm install
 ```
 
-1. Start the development server:
+4. Start the development server:
 
 ```bash
 npm run start 
