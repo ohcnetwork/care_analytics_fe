@@ -16,7 +16,7 @@ CARE Analytics FE is a frontend plugin for CARE based on micro frontend architec
 
 ### Setup Instructions
 
-1. First you will need to setup both Care backend and frontend first before starting the `care_analytics_fe` development server
+1. First you will need to setup both Care [backend](https://github.com/ohcnetwork/care) and [frontend](https://github.com/ohcnetwork/care_fe) first before starting the `care_analytics_fe` development server
 
 2. Clone the CARE Analytics FE repository:
   
@@ -61,7 +61,7 @@ Once the plugin is connected, configure dashboards from:
 
 ### Fields Explained
 
-- `Name`: Display name shown to users in Analytics cards
+- `Name`: Display name shown to users in Analytics cards does not need to be the same as the Metabase dashboard name
 - `Description`: Short explanation shown under the card title
 - `Handler`: Metabase name. Use `metabase`
 - `Handler Arguments`: JSON with the Metabase dashboard ID:
@@ -92,6 +92,8 @@ After saving an active config:
 3. You will see dashboard cards (Name + Description).
 4. Click **View Dashboard** to open the embedded Metabase dashboard.
 5. Use **Refresh** inside the viewer to regenerate and reload the analytics URL.
+Example :
+![Example](public/images/dashboard.jpeg)
 
 ## How the Flow Works
 
@@ -101,4 +103,4 @@ After saving an active config:
    `/api/analytics/config/{analyticsConfigId}/generate_analytics_url/`
 4. CARE renders the returned `redirect_url` in an embedded viewer.
 
-The deployed plugin is available at [https://care-analytics-fe.pages.dev/](https://care-analytics-fe.pages.dev/)
+A demo deployment is available at [https://care-analytics-fe.pages.dev/](https://care-analytics-fe.pages.dev/)
